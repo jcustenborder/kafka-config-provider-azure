@@ -1,7 +1,9 @@
 {
   "description" : "The following example uses the DefaultAzureCredential to load the credentials.",
   "name" : "Default",
-  "config" : { },
+  "config" : {
+    "vault.url": "https://example.vault.azure.net/"
+  },
   "prefix" : "keyVault",
   "connectorConfig" : {
     "username" : "${keyVault:mysql-connector:username}",

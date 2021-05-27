@@ -3,6 +3,7 @@
   "prefix": "keyVault",
   "description": "The following example shows how to override the default TTL for a credential.",
   "config": {
+    "vault.url": "https://example.vault.azure.net/"
   },
   "connectorConfig": {
     "username": "${keyVault:mysql-connector?ttl=600000:username}",

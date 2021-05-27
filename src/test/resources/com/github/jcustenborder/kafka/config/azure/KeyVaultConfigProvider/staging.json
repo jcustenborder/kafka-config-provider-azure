@@ -3,6 +3,7 @@
   "prefix": "keyVault",
   "description": "The following example us prefixes all secrets with `staging-`.",
   "config": {
+    "vault.url": "https://example.vault.azure.net/",
     "secret.prefix": "staging-"
   },
   "connectorConfig": {
