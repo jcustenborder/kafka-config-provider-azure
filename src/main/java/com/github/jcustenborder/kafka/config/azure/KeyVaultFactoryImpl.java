@@ -24,6 +24,8 @@ class KeyVaultFactoryImpl implements KeyVaultFactory {
   public SecretClientWrapper create(KeyVaultConfigProviderConfig config) {
     try {
       SecretClientBuilder builder = new SecretClientBuilder()
+          .vaultUrl(config.vaultUrl)
+          .httpClient(config.httpClient)
           .credential(config.buildCredential());
       final SecretClient secretClient = builder.buildClient();
       return secretClient::getSecret;

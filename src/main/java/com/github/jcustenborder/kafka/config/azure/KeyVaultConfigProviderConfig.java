@@ -16,6 +16,8 @@
 package com.github.jcustenborder.kafka.config.azure;
 
 import com.azure.core.credential.TokenCredential;
+import com.azure.core.http.HttpClient;
+import com.azure.core.http.okhttp.OkHttpAsyncHttpClientBuilder;
 import com.azure.identity.ClientCertificateCredentialBuilder;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.identity.DefaultAzureCredentialBuilder;
@@ -76,12 +78,17 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
   public static final String TENANT_ID_CONFIG = "tenant.id";
   public static final String TENANT_ID_DOC = "The tenant ID of the application.";
 
+  public static final String VAULT_URL_CONFIG = "vault.url";
+  public static final String VAULT_URL_DOC = "vault.url";
+
 
   public final long minimumSecretTTL;
   public final String prefix;
   public final CredentialLocation credentialLocation;
   public final String clientId;
   public final String tenantId;
+  public final String vaultUrl;
+  public final HttpClient httpClient;
 
   public KeyVaultConfigProviderConfig(Map<String, ?> settings) {
     super(config(), settings);
@@ -90,6 +97,9 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
     this.credentialLocation = ConfigUtils.getEnum(CredentialLocation.class, this, CREDENTIAL_TYPE_CONFIG);
     this.clientId = getString(CLIENT_ID_CONFIG);
     this.tenantId = getString(TENANT_ID_CONFIG);
+    this.vaultUrl = getString(VAULT_URL_CONFIG);
+    this.httpClient = new OkHttpAsyncHttpClientBuilder()
+        .build();
   }
 
   static final String GROUP_CLIENT_CERTIFICATE = "Client Certificate";
@@ -98,6 +108,12 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
 
   public static ConfigDef config() {
     return new ConfigDef()
+        .define(
+            ConfigKeyBuilder.of(VAULT_URL_CONFIG, ConfigDef.Type.STRING)
+                .documentation(VAULT_URL_DOC)
+                .importance(ConfigDef.Importance.HIGH)
+                .build()
+        )
         .define(
             ConfigKeyBuilder.of(CREDENTIAL_TYPE_CONFIG, ConfigDef.Type.STRING)
                 .documentation(CREDENTIAL_TYPE_DOC)
@@ -230,6 +246,7 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
     return result;
   }
 
+
   public TokenCredential buildCredential() {
     TokenCredential result;
 
@@ -237,7 +254,9 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
     switch (credentialLocation) {
       case DefaultAzure:
         log.info("Building DefaultAzureCredential");
-        result = new DefaultAzureCredentialBuilder().build();
+        result = new DefaultAzureCredentialBuilder()
+            .httpClient(this.httpClient)
+            .build();
         break;
       case ClientSecret:
         Password clientSecretPassword = getPassword(CLIENT_SECRET_CONFIG);

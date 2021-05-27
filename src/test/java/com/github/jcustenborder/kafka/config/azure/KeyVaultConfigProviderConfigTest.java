@@ -27,6 +27,7 @@ public class KeyVaultConfigProviderConfigTest {
   KeyVaultConfigProviderConfig create(String... args) {
     assertTrue(args.length % 2 == 0, "args should be pairs of 2");
     Map<String, String> settings = new LinkedHashMap<>();
+    settings.put(KeyVaultConfigProviderConfig.VAULT_URL_CONFIG, "https://example.vault.azure.net");
     for (int i = 0; i < args.length; i += 2) {
       String key = args[i];
       String value = args[i + 1];

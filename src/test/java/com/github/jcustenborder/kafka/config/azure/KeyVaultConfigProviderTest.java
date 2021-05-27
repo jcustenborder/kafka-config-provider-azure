@@ -51,6 +51,7 @@ public class KeyVaultConfigProviderTest {
     this.provider.keyVaultFactory = mock(KeyVaultFactory.class);
     when(this.provider.keyVaultFactory.create(any())).thenReturn(this.secretClientWrapper);
     this.settings = new LinkedHashMap<>();
+    this.settings.put(KeyVaultConfigProviderConfig.VAULT_URL_CONFIG, "https://example.vault.azure.net/");
     this.provider.configure(this.settings);
 
     this.mapper = new ObjectMapper();
