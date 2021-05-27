@@ -1,0 +1,11 @@
+{
+  "name": "TTL Override",
+  "prefix": "keyVault",
+  "description": "The following example shows how to override the default TTL for a credential.",
+  "config": {
+  },
+  "connectorConfig": {
+    "username": "${keyVault:mysql-connector?ttl=600000:username}",
+    "password": "${keyVault:mysql-connector?ttl=600000:password}"
+  }
+}

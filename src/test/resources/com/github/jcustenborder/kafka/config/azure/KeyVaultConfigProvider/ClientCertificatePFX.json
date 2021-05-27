@@ -1,0 +1,15 @@
+{
+  "description" : "The following example uses the ClientCertificateCredential to load the credentials.",
+  "name" : "Client Certificate - PFX",
+  "config" : {
+    "credential.type" : "ClientCertificate",
+    "client.certificate.type" : "PFX",
+    "tenant.id" : "27e831e4-5cff-4143-b612-64de151b2f3e",
+    "client.certificate.path" : "/tmp/path"
+  },
+  "prefix" : "keyVault",
+  "connectorConfig" : {
+    "username" : "${keyVault:mysql-connector:username}",
+    "password" : "${keyVault:mysql-connector:password}"
+  }
+}
