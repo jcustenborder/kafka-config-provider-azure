@@ -79,7 +79,7 @@ class KeyVaultConfigProviderConfig extends AbstractConfig {
   public static final String TENANT_ID_DOC = "The tenant ID of the application.";
 
   public static final String VAULT_URL_CONFIG = "vault.url";
-  public static final String VAULT_URL_DOC = "vault.url";
+  public static final String VAULT_URL_DOC = "The vault url to connect to. For example `https://example.vault.azure.net/`";
 
 
   public final long minimumSecretTTL;

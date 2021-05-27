@@ -55,19 +55,19 @@ import java.util.Set;
             "    }\n" +
             ""),
         @DocumentationSection(title = "Secret Retrieval", text = "The ConfigProvider will use the name of the secret to build the request to the Key Vault service. " +
-            "This behavior can be overridden by setting `config.providers.secretsManager.param.prefix=staging-` and requested the secret with `${secretsManager:test-secret}`, " +
+            "This behavior can be overridden by setting `config.providers.keyVault.param.prefix=staging-` and requested the secret with `${keyVault:test-secret}`, " +
             "the ConfigProvider will build a request for `staging-test-secret`. Some behaviors can be overridden by query string parameters. More than one query string parameter " +
-            "can be used. For example `${secretsManager:test-secret?ttl=30000&version=1}` would return the secret named `test-secret` version `1` with a TTL of 30 seconds. " +
+            "can be used. For example `${keyVault:test-secret?ttl=30000&version=1}` would return the secret named `test-secret` version `1` with a TTL of 30 seconds. " +
             "After the TTL has expired the ConfigProvider will request an updated credential. If you're using this with Kafka Connect, your tasks will be reconfigured if one of the values " +
             "have changed." +
             "\n\n" +
-            "+-----------+------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------+\n" +
-            "| Parameter | Description                                    | Default                                                                  | Example                                        |\n" +
-            "+===========+================================================+==========================================================================+================================================+\n" +
-            "| ttl       | Used to override the TTL for the secret.       | Value specified by `config.providers.secretsManager.param.secret.ttl.ms` | `${secretsManager:test-secret?ttl=60000}`      |\n" +
-            "+-----------+------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------+\n" +
-            "| version   | Used to override the version of the secret.    | latest                                                                   | `${secretsManager:test-secret?version=1}`      |\n" +
-            "+-----------+------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------+\n")
+            "+-----------+------------------------------------------------+--------------------------------------------------------------------+------------------------------------------+\n" +
+            "| Parameter | Description                                    | Default                                                            | Example                                  |\n" +
+            "+===========+================================================+====================================================================+==========================================+\n" +
+            "| ttl       | Used to override the TTL for the secret.       | Value specified by `config.providers.keyVault.param.secret.ttl.ms` | `${keyVault:test-secret?ttl=60000}`      |\n" +
+            "+-----------+------------------------------------------------+--------------------------------------------------------------------+------------------------------------------+\n" +
+            "| version   | Used to override the version of the secret.    | latest                                                             | `${keyVault:test-secret?version=1}`      |\n" +
+            "+-----------+------------------------------------------------+--------------------------------------------------------------------+------------------------------------------+\n")
     }
 )
 public class KeyVaultConfigProvider implements ConfigProvider {
